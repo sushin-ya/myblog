@@ -8,6 +8,11 @@
 import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faGithubSquare,
+  faTwitterSquare,
+} from "@fortawesome/free-brands-svg-icons"
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -36,21 +41,52 @@ const Bio = () => {
         className="bio-avatar"
         layout="fixed"
         formats={["AUTO", "WEBP", "AVIF"]}
-        src="../images/profile-pic.png"
-        width={50}
-        height={50}
+        src="../images/profile-pic2.png"
+        width={100}
+        height={100}
         quality={95}
         alt="Profile picture"
       />
-      {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
-        </p>
-      )}
+      <div className="bio-content">
+        {author?.name && (
+          <>
+            <p>
+              <strong>{author.name}</strong>(@tsuka_ryu)
+            </p>
+            <p>{author?.summary || null}</p>
+            <div>
+              <a
+                href={`https://github.com/tsuka-ryu`}
+                style={{ textDecoration: "none" }}
+              >
+                <FontAwesomeIcon
+                  icon={faGithubSquare}
+                  className="fa-2x"
+                  style={{
+                    marginTop: "5px",
+                    marginRight: "5px",
+                    color: "#171515",
+                  }}
+                />
+              </a>
+              <a
+                href={`https://twitter.com/${social?.twitter || ``}`}
+                style={{ textDecoration: "none" }}
+              >
+                <FontAwesomeIcon
+                  icon={faTwitterSquare}
+                  className="fa-2x"
+                  style={{
+                    marginTop: "5px",
+                    marginRight: "5px",
+                    color: "#1DA1F2",
+                  }}
+                />
+              </a>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
