@@ -6,7 +6,7 @@ module.exports = {
       summary: `web engineer minarai`,
     },
     description: `This is a blog for tsukaryu to keep a memorandum about technology.`,
-    siteUrl: ``,
+    siteUrl: `https://github.com/tsuka-ryu`,
     social: {
       twitter: `tsuka_ryu`,
     },
