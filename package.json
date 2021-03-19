@@ -1,11 +1,11 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "tsukaryu's blog",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "This is a blog for tsukaryu to keep a memorandum about technology.",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "tsukaryu",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/tsuka-ryu"
   },
   "dependencies": {
     "@fontsource/reggae-one": "^4.2.2",
@@ -39,6 +39,7 @@
     "typeface-montserrat": "0.0.75"
   },
   "devDependencies": {
+    "gatsby-remark-code-titles": "^1.1.0",
     "prettier": "2.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
