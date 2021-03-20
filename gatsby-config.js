@@ -32,10 +32,15 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-code-titles',
+            resolve: "gatsby-remark-code-titles",
+            options: {},
+          },
+          {
+            resolve: "gatsby-remark-external-links",
             options: {
+              rel: "noopener noreferrer",
             },
-          },  
+          },
           {
             resolve: `gatsby-remark-images`,
             options: {
