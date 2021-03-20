@@ -145,10 +145,13 @@ h3 {
 
 h4 {
   font-size: var(--fontSize-3);
+  border-bottom: solid 2px var(--color-primary);
 }
 
 h5 {
   font-size: var(--fontSize-2);
+  border-left: solid 5px var(--color-primary);
+  padding: 0 0.5em;
 }
 
 h6 {
@@ -255,7 +258,7 @@ a:focus {
 .global-wrapper {
   margin: var(--spacing-0) auto;
   max-width: var(--maxWidth-wrapper);
-  padding: var(--spacing-10) var(--spacing-5);
+  padding: var(--spacing-5) var(--spacing-5);
 }
 
 .global-wrapper[data-is-root-path="true"] .bio {
