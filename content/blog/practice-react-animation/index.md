@@ -186,7 +186,7 @@ const springs = useSprings(
 ```
 
 3. animated コンポーネントを定義  
-   springs に対して、map してそれぞれ props を定義しています。  
+   `springs` に対して、`map` してそれぞれ props を定義しています。  
    文字は、letters にインデックスを添えることで、表示しています。  
    これもかなりスッキリかけていい感じですね。
 
