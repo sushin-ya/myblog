@@ -16,3 +16,9 @@ react-awesome-slider も捨てがたいけど、読み解くのに時間がか�
 - react-awesome-slider: react でかなりリッチ。ただ HOC のカスタマイズがいまいちわからん。。。
 - react-slick: ちょっとシンプルすぎるのでやめました
 - swiper: jquery ベースのライブラリの react 移植版。coverflow が思ったように表示できず断念。
+
+
+##### ちなみに
+react-intersection-observerを触ってみました。  
+Hooksでとってもかんたんに書けるので、ヒーロースライダーができたら全体をマージして、  
+よくあるポートフォリオサイトを作りたいと思います。  
