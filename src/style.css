@@ -335,6 +335,16 @@ a:focus {
   margin-bottom: var(--spacing-8);
 }
 
+.gatsby-highlight-code-line {
+  background-color: #545454;
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 0.75em;
+  border-left: 0.25em solid var(--color-primary);
+}
+
 .gatsby-code-title {
   background: var(--color-primary);
   color: #eee;
