@@ -24,7 +24,8 @@ gif って意外とファイルサイズ大きくて、二桁 MB くらいにな
 ##### 20210413 追記
 
 gif があまりにもバカでかいのでググったら、いい感じの呪文が見つかりました。ありがたや。  
-入力ファイル名を input.mov にすれば、ターミナルに貼り付けるだけですぐ実行的で便利ですね。
+入力ファイル名を input.mov にすれば、ターミナルに貼り付けるだけですぐ実行的で便利ですね。  
+とはいえ、せいぜい 1MB くらいのサイズにしないと、読み込みが全然終わりません。。。
 
 ```bash
 ffmpeg -i input.mov -filter_complex "[0:v] fps=10,scale=640:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse=dither=none" output-palette-none.gif
@@ -33,4 +34,4 @@ ffmpeg -i input.mov -filter_complex "[0:v] fps=10,scale=640:-1,split [a][b];[a] 
 #### 参考
 
 [.mov を animated gif に変換する](https://qiita.com/janus_wel/items/5841502df901d8e51280).  
-[ffmpeg でとにかく綺麗な GIF を作りたい](https://qiita.com/yusuga/items/ba7b5c2cac3f2928f040b).
+[ffmpeg でとにかく綺麗な GIF を作りたい](https://qiita.com/yusuga/items/ba7b5c2cac3f2928f040).
