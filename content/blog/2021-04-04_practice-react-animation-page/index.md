@@ -9,7 +9,7 @@ date: "2021-04-04T00:53:37.121Z"
 
 #### 暫定版
 
-![AnimationPage](./animationpage.gif)
+![animationpage](./animationpage.gif)  
 [soruce](https://github.com/tsuka-ryu/delfruit)
 
 #### 目的
