@@ -104,6 +104,60 @@ useEffect(() => {
 Youtube のチュートリアル動画がわかりやすいです。  
 [Introducing ScrollTrigger for GSAP](https://www.youtube.com/watch?v=X7IBa7vZjmo)
 
+##### 完成形
+
+```js:title=App.js
+import { useRef, useEffect } from "react";
+import "./App.css";
+import workout from "./workout.svg";
+import greensocklogo from "./greensocklogo.svg";
+import happy from "./happy.svg";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+function App() {
+  gsap.registerPlugin(ScrollTrigger);
+  const ref = useRef(null);
+  useEffect(() => {
+    const element = ref.current;
+    gsap.fromTo(
+      element.querySelector(".first-paragraph"),
+      {
+        opacity: 0,
+        y: -20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scrollTrigger: {
+          trigger: element.querySelector(".first"),
+          start: "top top",
+          end: "bottom center",
+          scrub: true,
+        },
+      }
+    );
+  }, []);
+  return (
+    <div className="App" ref={ref}>
+      <div className="first">
+        <h1>ScrollTrigger</h1>
+        <p className="first-paragraph">
+          is the coolest Greensock plugin.
+          <span role="img" aria-label="celebrating">
+            🥳
+          </span>
+        </p>
+        <div className="logo-main">
+          <img src={workout} id="workout-logo" alt="workout" />
+        </div>
+      </div>
+    </div>
+  );
+}
+export default App;
+```
+
 #### 最後に
 
 [前回](/2021-04-13_practice_swiper/)、JS でなんとなく書いて、  
