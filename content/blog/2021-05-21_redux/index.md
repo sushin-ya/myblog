@@ -249,6 +249,19 @@ const dispatch = useDispatch()
 />
 ```
 
+#### 番外編
+
+`/shelfs/:id`のページのとき、store からどうやって値を取り出すか。  
+React Router の match メソッドを使って、state と合致するものを取り出します。  
+React Router と React Redux が相まみえるところですね。
+
+```js
+export default function ShelfDetailedPage({ match }) {
+  const shelf = useSelector((state) =>
+    state.shelf.shelfs.find((s) => s.uid === match.params.id)
+  );
+```
+
 #### 最後に
 
 かなり長くなりましたが、Redux の基礎から React Hooks を用いた実装まで、  
