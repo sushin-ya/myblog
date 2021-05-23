@@ -89,7 +89,7 @@ src
 
 まずは、import と宣言部です。  
 asyncAction を利用するので、インポートしています。  
-また、api との通信のために axios を導入しています。
+また、api との非同期処理のために axios を導入しています。
 
 ```js:title=popularFilmReducer（import/宣言）
 import {
@@ -111,7 +111,7 @@ const initialState = {
 ##### popularFilmReducer（ActionCreator 全体）
 
 fetchPopularFilm という名前で Action Creator を作成しています。  
-少し長くて分かりづらいので、先に構造を見ます。  
+全体が長くて分かりづらいので、先に構造を見ます。  
 コメントアウト部分以外は、ほぼ定型文と考えて差し支えないでしょう。
 
 ```js:title=popularFilmReducer（ActionCreator）
@@ -187,7 +187,7 @@ export function fetchPopularFilm() {
 
 ```
 
-今回は、ひとつの情報を取り出すために以下の過程を踏んでいます。
+今回は、newFilms という情報を作り込むために以下の過程を踏んでいます。
 
 - top_rated な映画情報を取得して `films` に格納
 - `films`の中にある映画の ID を用いて、映画の crew 情報を取得
@@ -306,6 +306,16 @@ export default function popularFilmReducer(
 }
 
 ```
+
+#### 最後に
+
+かなり省きましたが、以上で TMDB 入門は終わりです。  
+今回のアプリだとあまり API をごりごり叩くことはないのですが、  
+使えそうな情報が沢山あるので、練習がてら他のアプリも作成してみたいですね。  
+下記が完成品です。デザインが微妙！  
+一番上の映画は聞いたこともないインド映画！さすがボリウッド！
+
+![output](output.gif)
 
 #### 参考
 
