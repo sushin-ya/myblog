@@ -8,7 +8,7 @@ date: "2021-05-25T11:27:37.121Z"
 
 #### プロジェクト作成
 
-プロジェクトの準備は、(コンソール)[https://console.firebase.google.com/]画面から、適当にポチポチすればできるので割愛します。
+プロジェクトの準備は、[コンソール](https://console.firebase.google.com/)画面から、適当にポチポチすればできるので割愛します。
 
 #### ウェブアプリに Firebase を追加
 
@@ -348,7 +348,7 @@ export function getShelfsFromFirestore(observer) {
   return db.collection("shelfs").onSnapshot(observer)
 }
 
-// 実際に呼び出し
+// 実際に呼び出し useEffectしたほうがいい
 const unsubscribe = getShelfsFromFirestore({
   next: snapshot =>
     console.log(
@@ -364,7 +364,7 @@ return unsubscribe
 
 以上で、firestore 入門は終わりです。  
 Udemy の動画を復習していたのですが、onSnapshot が何をしているのかわからなすぎて、ドキュメントをちゃんと読んでみました。  
-次回は、firestore と redux thunk が絡み合ってややこしくなりそうです。
+次回は、firestore と redux が絡み合ってややこしくなりそうです。
 
 #### 参考
 
