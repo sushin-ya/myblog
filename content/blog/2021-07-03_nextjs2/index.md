@@ -179,6 +179,15 @@ function HomePage(props) {
 
 #### 最後に
 
+今回は認証とかそういう機能はなかったけど、コア機能は網羅できてよかったです。  
+またひとつ、Udemy の講座とりたくなりましたね。
+
+React 単体では面倒だったルーティングや API 周りの処理が Next.js では規定されていて、かなりスッキリした印象でした。特に、ページとコンポーネントを分けることでコードの見通しも良くなるしいいこと尽くめでしたね。
+
+今後は React ＋ TypeScript ＋ Next.js でアプリ作っていけたらいいかな。  
+なお、いくつか面接させていただきましたが、技術レベル的に未経験だと厳しいですかね。。。  
+どこかでガリガリスキルアップしたいなあ。
+
 #### 参考
 
 - [Next.js 9.3 新 API getStaticProps と getStaticPaths と getServerSideProps の概要解説](https://qiita.com/matamatanot/items/1735984f40540b8bdf91#getstaticpaths)
