@@ -205,7 +205,7 @@ export function fetchShelfs(limit, lastDocSnapshot) {
 
 ここでフィルターにかけたりもできるのですが、今回はシンプルにデータを取得しています。
 
-```js:titlefirestoreService(抜粋)
+```js:title=firestoreService(抜粋)
 export function fetchShelfsFromFirestore(limit, lastDocSnapshot = null) {
   return db
     .collection('shelfs')
