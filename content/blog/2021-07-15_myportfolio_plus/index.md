@@ -31,7 +31,7 @@ npm run dev
 #### `.js`→`.tsx`を詳しく
 
 TypeScript もわからないのに、`.js`を`.tsx`に書き換えって何やねんということで、詳しく記録しておきます。  
-[これの３ページめ](https://nextjs.org/learn/excel/typescript/nextjs-types)を参考に、ゴリゴリ変えていきます。
+[これ](https://nextjs.org/learn/excel/typescript/nextjs-types)を参考に、ゴリゴリ変えていきます。
 
 ##### \_app.tsx
 
