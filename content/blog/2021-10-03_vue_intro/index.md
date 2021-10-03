@@ -195,3 +195,87 @@ ul の配下には li しか置けないが、li の代わりに template を置
 ```
 
 #### イベントハンドリング
+
+v-on。$event で DOM イベントを渡せる。  
+イベント修飾子っていうのもある。prevent とか self とか。メソッドチェーンもできる。
+
+ここ何言ってるかわからん
+
+```html
+<!-- イベントリスナーを追加するときにキャプチャモードで使います -->
+<!-- 言い換えれば、内部要素を対象とするイベントは、その要素によって処理される前にここで処理されます -->
+<div v-on:click.capture="doThis">...</div>
+
+<!-- event.target が要素自身のときだけ、ハンドラが呼び出されます -->
+<!-- 言い換えると子要素のときは呼び出されません -->
+<div v-on:click.self="doThat">...</div>
+```
+
+##### キー修飾子
+
+キー操作を検知できる。`<input v-on:keyup.enter="submit">`とか。
+
+#### フォーム入力バインディング
+
+v-model は input 要素に応じていい感じに動くように糖衣構文になってるらしい。わかりにくい。
+
+#### コンポーネントの基本
+
+コンポーネントは再利用可能な Vue インスタンスなので、data、computed、watch、methods、ライフサイクルフックなどの new Vue と同じオプションを受け入れる。ただし、data は関数でないといけない。  
+見た目はインスタンスとほぼ同じなのにわかりにくい。
+
+props を使えば子に値を渡せる。
+
+$emit はイベントと値を親に渡せる。
+
+v-model を使うと、$emit を使ってめんどくさい更新（例えば textform の内容が親コンポーネントで表示されてるとか）をいい感じにしてくれる。
+
+react でいう children みたいなものが slot らしい。
+
+コンポーネント間を動的に切り替える場合などは、component と is を使うとうまくいくらしい。
+
+```html{15,35-38}
+<!DOCTYPE html>
+<html>
+  //略
+  <body>
+    <div id="dynamic-component-demo" class="demo">
+      <button
+        v-for="tab in tabs"
+        v-bind:key="tab"
+        v-bind:class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab"
+      >
+        {{ tab }}
+      </button>
+
+      <component v-bind:is="currentTabComponent" class="tab"></component>
+    </div>
+
+    <script>
+      Vue.component("tab-home", {
+        template: "<div>Home component</div>",
+      })
+      Vue.component("tab-posts", {
+        template: "<div>Posts component</div>",
+      })
+      Vue.component("tab-archive", {
+        template: "<div>Archive component</div>",
+      })
+
+      new Vue({
+        el: "#dynamic-component-demo",
+        data: {
+          currentTab: "Home",
+          tabs: ["Home", "Posts", "Archive"],
+        },
+        computed: {
+          currentTabComponent: function () {
+            return "tab-" + this.currentTab.toLowerCase()
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
+```
