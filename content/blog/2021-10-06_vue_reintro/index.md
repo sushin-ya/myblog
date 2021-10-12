@@ -150,3 +150,174 @@ slot で受け取ったデータを渡す方法。slotProps。子から親にデ
 ##### teleport
 
 vue3 の機能（Composition api?）。コンポーネントを DOM の好きな位置に差し込めるっぽい。
+
+#### form
+
+form では click リスナーより v-model のほうが値の更新もできて便利。
+
+##### input/textarea
+
+普通に v-model するだけ。number、trim、lazy とか修飾子が使える
+
+#### select
+
+v-model するだけで value が取れる
+
+#### checkbox / radiobutton （複数のやつ）
+
+v-model は同じだけど、初期値を配列で渡してやる。あと、value を設定してユニークにしないと一つ押すと全部押下したことになっちゃう。単一のチェックボックスは true false
+
+```html
+<input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+<label for="jack">Jack</label>
+<input type="checkbox" id="john" value="John" v-model="checkedNames" />
+<label for="john">John</label>
+<input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+<label for="mike">Mike</label>
+<br />
+<span>Checked names: {{ checkedNames }}</span>
+```
+
+```js
+new Vue({
+  el: "...",
+  data: {
+    checkedNames: [],
+  },
+})
+```
+
+カスタムコンポーネントも v-model でいい感じにかけるらしい。  
+でも子の側から$emit するからちょっとめんどい
+
+#### http リクエスト
+
+axios か fetch。
+
+下記の形は this を参照できなくなるので使えない。アロー関数にすること。  
+コンテキスト...
+
+```js
+// NG
+fetch(url).then(function (response) {
+  this.result = response.json()
+})
+
+// OK
+fetch(url).then(response => {
+  this.result = response.json()
+})
+```
+
+##### mounted()
+
+http リクエストを事前に行う場合は、ライフサイクルの mounted を使う。
+そもそも URL が間違っている場合は、catch 出来るが、ちゃんとレスポンスが返ってきて、そのステータスコードが 400 や 500 の場合（つまり送ってるデータがおかしい場合）は、ハンドリングして上げる必要がある。
+
+```js
+fetch(firebaseUrl, {
+  method: POST,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: {
+    name: this.name,
+    age: this.age,
+  },
+  // 本来はJSON形式にしないとだめ
+  // body: JSON.stringfy({
+  //   name: this.name,
+  //   age: this.age,
+  // }),
+})
+  .then(response => {
+    if (response.ok) {
+      //...処理
+    } else {
+      throw new Error("Could not save data!") // fetchはこれがないとcatchされない axiosはされる？
+    }
+  })
+  .catch(error => {
+    console.log(error)
+  })
+```
+
+#### routing
+
+Nuxt でカバーされる範囲だけど一応やっとく。vue-router というやつ。  
+登録して、`to`キーワードで遷移先を指定すればいいらしい。  
+active なんとかってクラスが付与されるからオーバーライドすれば、スタイルもつけられる。
+
+method の中で扱うには、`this.$router.push()`みたいにする。
+
+##### 動的ルーティング
+
+created はコンポーネントが生成されたときに実行される。  
+つまり、動的ページが生成されたときに使える。
+
+`this.$route.path`っていう引数で、情報を引っ張れる。  
+あるいは、`this.$route.params.id`
+
+動的ページを created で情報を作成するとキャッシュされて、ルーティングが変わっても変更されないことがある。
+そういうときは watch で変更をキャッチすること。
+
+```js
+watch:{
+  $route(newRoute){
+    /* 処理 */
+  }
+}
+```
+
+$route を使いたくない場合は props を使う。その場合は router 設定時に props:true とすること。
+
+beforeEach とか afterEach というナビゲーションガード機能がある。なんかよくわからんけどめんどくさそう。
+beforeRouteEnter ってやつは、ページ遷移する直前に「情報をクリアするけどいい？」みたいに聞くタイミングで使えるみたい。unmounted()だと、すでに情報がクリアされたあとなので、処理的に無理なことが出来る。
+
+#### Transition と Animation
+
+要素が消えるときってアニメーションが適応できない。そういうときは Vue の transition 機能を使う。
+
+v-enter とかその他の特殊なクラスが組み込んであって、そいつらを使えばかんたんに実装できる。
+transition の name プロパティを設定すれば接頭が`v-`ではなく`hoge-`に出来る。
+さらに`enter-to-class`などでそもそものクラス名も指定できる。
+
+transition はコンポーネントをひとつしか引き受けできないが、v-if と v-else の組み合わせの場合は、複数でも大丈夫。
+
+イベントの`before-enter`とかそういうのを使うと、関数の引数に element が取れるので、直接スタイルできたりもする。
+
+```js
+// vanilla
+beforeEnter(el,done){
+  el.style.opacity(0)
+
+  done() // vueにアニメーションの設定画完了したことを通知。
+}
+```
+
+#### vuex
+
+- state: ステート
+- mutation: 値の更新
+- getters: 値の呼び出し（getter から getter を呼び出すこともある）
+- action: mutaition のラッパーで非同期処理が書ける
+
+##### mapGetters / mapActions
+
+呼び出しのラッパー。methods にマージできる
+
+```js
+methods: {
+  ...mapGetters(['foo'])
+  ...mapActions(['bar'])
+}
+```
+
+##### rootState / rootGetter
+
+ストアを分割すると、分割した内部の state にしかアクセスできないので、rootState とかを使う必要がある
+namespace を使う場合は、`this.$store.getters['namespace/method']`ってスラッシュを使ったかなりキモい書き方をする。
+
+#### 最後に
+
+基本はここまでで終わり。コースのメインプロジェクトをやって、もう少しで終わりだ。
