@@ -301,6 +301,7 @@ beforeEnter(el,done){
 - mutation: 値の更新
 - getters: 値の呼び出し（getter から getter を呼び出すこともある）
 - action: mutaition のラッパーで非同期処理が書ける
+- namespaced: 名前空間、つづりが間違えやすいので
 
 ##### mapGetters / mapActions
 
