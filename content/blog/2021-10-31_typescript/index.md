@@ -171,6 +171,123 @@ enum Color {
 
 型安全な any 型。type of と組み合わせて使えば any に頼りすぎずにいられる。この type of は型ガードと呼ばれる。
 
+##### intersection 型
+
+`&`で型を合体する
+
+```ts
+type Name = {
+  name: string
+}
+
+type Age = {
+  age: number
+}
+
+type Human = Name & Age
+```
+
+##### union 型
+
+`|`で複数の型を指定する。
+
+```ts
+let foo: number | string = 1
+foo = "test"
+```
+
+##### Literal 型
+
+文字列や数値を明示的に定義する。（union と似ててややこし）
+
+```ts
+const day: "月" | "火" | "水" = "月"
+```
+
+string として型推論されてしまうことがある場合、型アサーションで定義してあげると、`Type string is not assignable to type "foo"`を回避出来る。
+
+enum は数値ベースなので、文字列ベースの列挙はリテラルで行うとよい
+
+```ts
+function iTakeFoo(foo: "foo") {}
+const test = {
+  someProp: "foo" as "foo",
+}
+iTakeFoo(test.someProp) // Okay!
+```
+
+#### 型アサーション
+
+`as`ってやつ。（`<foo>`でも出来るけど JSX とややこしくなるから非推奨）。ちょっと型安全ではない。  
+ダブルアサーションという技もある。
+
+```ts
+function handler(event: Event) {
+  let element = event as HTMLElement // Error: Neither 'Event' nor type 'HTMLElement' is assignable to the other
+  // let element = (event as any) as HTMLElement // Okay!
+}
+```
+
+#### Freshness(厳密なオブジェクトリテラルチェック)
+
+オブジェクトの中身は`foo?`のように、使うかわからないものも含めてすべて定義しておくのがいい
+
+```ts
+// Assuming
+interface State {
+    foo?: string;
+    bar?: string;
+}
+
+// You want to do:
+this.setState({foo: "Hello"}); // Yay works fine!
+
+// Because of freshness it's protected against typos as well!
+this.setState({foos: "Hello"}}; // Error: Objects may only specify known properties
+
+// And still type checked
+this.setState({foo: 123}}; // Error: Cannot assign number to a string
+```
+
+#### 型ガード
+
+interfaceof や typeof を使って、if 文と組み合わせることで、型によって処理を分岐できる。  
+コールバックの内部だとローカルにしたりちょっと癖がある？
+
+#### 関数のオーバーロードとシグネチャ
+
+引数と戻り値のみを定義（シグネチャ）して、関数の実体のほうでは型制約を行わない。
+
+```ts
+// Overloads
+function padding(all: number)
+function padding(topAndBottom: number, leftAndRight: number)
+function padding(top: number, right: number, bottom: number, left: number)
+// Actual implementation that is a true representation of all the cases the function body needs to handle
+function padding(a: number, b?: number, c?: number, d?: number) {
+  if (b === undefined && c === undefined && d === undefined) {
+    b = c = d = a
+  } else if (c === undefined && d === undefined) {
+    c = a
+    d = b
+  }
+  return {
+    top: a,
+    right: b,
+    bottom: c,
+    left: d,
+  }
+}
+```
+
+```ts
+padding(1) // Okay: all
+padding(1, 1) // Okay: topAndBottom, leftAndRight
+padding(1, 1, 1, 1) // Okay: top, right, bottom, left
+
+padding(1, 1, 1) // Error: Not a part of the available overloads
+```
+
 #### 参考
 
 ・[TypeScript Deep Dive](https://typescript-jp.gitbook.io/deep-dive)
