@@ -60,6 +60,7 @@ const tupple: [string, number] = ["test", 123]
 ##### never
 
 never は呼び元に戻っていかない。
+never 型は never 型しか代入できない
 
 ```ts
 function error(message: string): never {
@@ -228,6 +229,14 @@ function handler(event: Event) {
 }
 ```
 
+const アサーション（再代入は行わない）というものもある。
+下記の例は"Hamu"型なので、"Ham"しか再代入はできない。オブジェクトでも同じことが出来る。readonly な型になる。
+
+```ts
+let nickname = "Ham" as const
+nickname = "Hamutaro"
+```
+
 #### Freshness(厳密なオブジェクトリテラルチェック)
 
 オブジェクトの中身は`foo?`のように、使うかわからないものも含めてすべて定義しておくのがいい
@@ -287,6 +296,50 @@ padding(1, 1) // Okay: topAndBottom, leftAndRight
 padding(1, 1, 1, 1) // Okay: top, right, bottom, left
 
 padding(1, 1, 1) // Error: Not a part of the available overloads
+```
+
+#### 高度な型など
+
+##### ジェネリクス型
+
+抽象的な型を定義できる。
+慣習的に単純な型には T、U、V を使おう。
+
+##### Nullable Types
+
+tsconfig 内で strict null check が入っているかどうかで扱いが変わる。
+一般的にはよくない。普通は Union 型で null を許容する
+
+```ts
+age: number | null
+```
+
+##### インデックスシグネチャ
+
+> JavaScript(TypeScript)の Object は、他の JavaScript オブジェクトへの参照を保持し、文字列でアクセスできます。
+
+つまり、暗示的に toString()的なことを内部でやっている。明示的に宣言を行うことで、エラーを回避することが出来る。
+なお、index は任意の文字列であり、かつ number 型も指定できるらしい。
+オブジェクト内の型を制約できる？みたいだけど、あまり使い所がわからん。
+
+```ts
+let foo: { [index: string]: { message: string } } = {}
+
+/**
+ * Must store stuff that conforms to the structure
+ */
+/** Ok */
+foo["a"] = { message: "some message" }
+/** Error: must contain a `message` or type string. You have a typo in `message` */
+foo["a"] = { messages: "some message" }
+
+/**
+ * Stuff that is read is also type checked
+ */
+/** Ok */
+foo["a"].message
+/** Error: messages does not exist. You have a typo in `message` */
+foo["a"].messages
 ```
 
 #### 参考
