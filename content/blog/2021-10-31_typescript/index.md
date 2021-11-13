@@ -461,6 +461,12 @@ infer 句は、generics の`T`みたいに、後続で同じ型`R`を再利用�
 そのうち読もう  
 [cheatsheets](https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets)
 
+#### 最後に
+
+TypeScript を勉強し直した。業務で他人が書いたコードを読む際には必要だったので、いろいろわかるようになってよかった。  
+けど、ConditionalType とか MappedType とか使ってるの見たことないけど？というのもある。  
+まだ見ぬ世界があるということか...
+
 #### 参考
 
 - [TypeScript Deep Dive](https://typescript-jp.gitbook.io/deep-dive)
