@@ -461,6 +461,8 @@ infer 句は、generics の`T`みたいに、後続で同じ型`R`を再利用�
 そのうち読もう  
 [cheatsheets](https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets)
 
+OptinalChaining`?`と Non-Null Assertion Operator`!`は使いそう
+
 #### 最後に
 
 TypeScript を勉強し直した。業務で他人が書いたコードを読む際には必要だったので、いろいろわかるようになってよかった。  
