@@ -342,6 +342,132 @@ foo["a"].message
 foo["a"].messages
 ```
 
+#### UtilityType と ConditionalType
+
+[公式](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)を見ればすべてが分かる
+
+##### Partioal
+
+すべてがオプションになるように型を引き継ぐ  
+内部的な実装はインデックスシグネチャと keyof を使って行われている  
+[`keyof`](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)はオブジェクトを文字列か数値のリテラル型の union type を生成する  
+`T[P]`は P をキーにして型にアクセスしている
+
+```ts
+type Partial<T> = {
+  [P in keyof T]?: T[P]
+}
+```
+
+##### Required
+
+すべてが必須になるように型を引き継ぐ
+
+##### Mapped
+
+別の型を元に型を作る  
+`[P in keyof T]?: T[P]`みたいに in keyof で定義する  
+他の UtilityType と組み合わせて使うっぽい
+
+##### Readonly
+
+readonly にする
+
+##### Record<Keys, Type>
+
+Keys（文字列リテラル型） と Type（オブジェクト） を引数に取る
+
+```ts
+interface CatInfo {
+  age: number
+  breed: string
+}
+
+type CatName = "miffy" | "boris" | "mordred"
+
+const cats: Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: "Persian" },
+  boris: { age: 5, breed: "Maine Coon" },
+  mordred: { age: 16, breed: "British Shorthair" },
+}
+```
+
+##### Exclude
+
+指定した型を除外する
+
+```ts
+type Exclude<T, U> = T extends U ? never : T
+```
+
+ConditionalType で定義されている  
+` SomeType extends OtherType ? TrueType : FalseType;`
+
+Distributive ConditionalType の説明。  
+`For example, an instantiation of T extends U ? X : Y with the type argument A | B | C for T is resolved as (A extends U ? X : Y) | (B extends U ? X : Y) | (C extends U ? X : Y).`
+
+##### Extract
+
+アサイン可能な型を抽出する
+
+```ts
+type T0 = Extract<"a" | "b" | "c", "a" | "f">
+// type T0 = "a"
+```
+
+##### NonNullable
+
+null と undefined を除外する
+
+##### Pick
+
+欲しい物を選択して型を構築する
+
+##### Omit
+
+いらないものを除外して型を構築する
+
+##### ReturnType
+
+戻り値の型を取得する
+
+```ts
+type ReturnType<T extends (...args: any) => any> = T extends (
+  ...args: any
+) => infer R
+  ? R
+  : any
+```
+
+ReturnType は関数じゃないと引数にできない
+
+```ts
+<T extends (...args: any) => any>
+```
+
+infer 句は、generics の`T`みたいに、後続で同じ型`R`を再利用するために型を拾い上げている
+
+##### Parameter
+
+関数型 Type のパラメーターで使用される型からタプル型を構築する  
+ライブラリなどの関数の引数の型を定義するときに使える
+
+##### ConstructorParameters
+
+インスタンスの引数の型を作る
+
+#### React と TypeScript
+
+そのうち読もう  
+[cheatsheets](https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets)
+
 #### 参考
 
-・[TypeScript Deep Dive](https://typescript-jp.gitbook.io/deep-dive)
+- [TypeScript Deep Dive](https://typescript-jp.gitbook.io/deep-dive)
+- [UtilityType](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [ConditionalType](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html)
+- [MappedType](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html)
+- [サバイバル TypeScript](https://book.yyts.org/overview/range-of-typescript)
+- [TypeScript/指定した型のプロパティ名を取得する](https://zenn.dev/shztmk/articles/02_typescript-key-matching)
+- [Mapped Types の基本形](https://zenn.dev/qnighy/articles/dde3d980b5e386)
+- [cheatsheets](https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets)
